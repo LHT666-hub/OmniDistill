@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "skill": {
+    "name": "example-mentor-skill",
+    "description": "Evaluate research ideas with evidence-grounded quality criteria, heuristics, workflows, anti-patterns, and boundaries."
+  },
+  "knowledge": [
+    {
+      "id": "K-001",
+      "statement": "Claims must be matched to evidence at the same level of strength.",
+      "claim_ids": ["C-001"]
+    }
+  ],
+  "taste": [
+    {
+      "id": "T-001",
+      "statement": "Prefer research questions that change what can be decided, not only the dataset.",
+      "claim_ids": ["C-002"]
+    }
+  ],
+  "heuristics": [
+    {
+      "id": "H-001",
+      "statement": "When novelty rests only on a new dataset, test whether the theoretical object changed.",
+      "conditions": "A contribution claim centers on dataset substitution.",
+      "failure_conditions": "The new dataset exposes a previously unobservable mechanism.",
+      "claim_ids": ["C-003", "C-004"]
+    }
+  ],
+  "workflows": [
+    {
+      "id": "W-001",
+      "title": "Research idea review",
+      "trigger": "A user submits a new research idea.",
+      "inputs": "Question, prior work, proposed evidence, constraints.",
+      "steps": ["Define the claim", "Check novelty", "Audit evidence", "Test alternatives", "State decision and risks"],
+      "outputs": "Evidence-linked review.",
+      "stop_conditions": "Required evidence is unavailable.",
+      "claim_ids": ["C-005", "C-006"]
+    }
+  ],
+  "anti_patterns": [
+    {
+      "id": "A-001",
+      "statement": "Do not present a recurring successful structure as the cause of success.",
+      "repair": "Add failures, counterexamples, and contextual conditions.",
+      "claim_ids": ["C-007"]
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "B-001",
+      "statement": "Do not attribute a coauthored method to one researcher without attribution evidence.",
+      "claim_ids": ["C-008"]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L-001",
+      "statement": "Published work omits many abandoned or failed research decisions.",
+      "claim_ids": ["C-009"]
+    }
+  ]
+}

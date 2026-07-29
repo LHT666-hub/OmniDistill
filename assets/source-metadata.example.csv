@@ -1,0 +1,3 @@
+path,source_kind,author,published_at,access_level,rights,consent,independence_group,allowed_use,notes
+paper-a.pdf,document,Target,2025-01-01,full,user-owned,yes,paper-a,as_declared,Representative full paper
+interview-b.md,interview,Interviewer,2026-02-01,full,licensed,yes,interview-b,as_declared,Independent long interview

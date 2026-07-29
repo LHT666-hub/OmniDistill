@@ -19,7 +19,7 @@ OmniDistill 所说的“蒸馏”，不是机器学习中将大模型参数迁�
 | 科研专家经验蒸馏 | Supervisor-Skills | [HKUSTDial/Supervisor-Skills](https://github.com/HKUSTDial/Supervisor-Skills) |
 | 文档语料蒸馏 | Corpus2Skill | [dukesun99/Corpus2Skill](https://github.com/dukesun99/Corpus2Skill) |
 | 知识库与 Skill Factory | OpenKB | [VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) |
-| 错误与交互经验蒸馏 | self-improving-agent | [pskoett/self-improving-agent](https://github.com/pskoett/self-improving-agent) |
+| 错误与交互经验蒸馏 | self-improving-agent | [peterskoett/self-improving-agent](https://github.com/peterskoett/self-improving-agent) |
 | Claim 与证据核验 | Academic Reference Matcher | [keros68/academic-reference-matcher-skill](https://github.com/keros68/academic-reference-matcher-skill) |
 
 这些项目为 OmniDistill 提供的是方法论启发，而不是可直接拼接的代码模块。OmniDistill 的协议、目录结构和脚本采用独立实现。
@@ -305,7 +305,7 @@ Distillation Protocol
 
 ### 代表项目
 
-[self-improving-agent](https://github.com/pskoett/self-improving-agent)
+[self-improving-agent](https://github.com/peterskoett/self-improving-agent)
 
 它从运行中的错误、用户纠正、知识缺口、项目惯例和有效实践中提炼候选规则，并在重复出现后提升到长期规则或独立 Skill。
 

@@ -1,186 +1,212 @@
 ---
 name: omni-distill
-description: Evidence-driven meta skill for distilling people, experts, researchers, documents, successful cases, projects, and interaction histories into executable Skills. Use when the user wants to extract hidden expertise, workflows, decision patterns, research taste, knowledge structures, or personal operating rules from source materials.
+description: Build or update evidence-grounded Agent Skills from people, experts, researchers, document corpora, case sets, project histories, and repeated user feedback. Use when Codex must distill implicit knowledge, research taste, decision heuristics, SOPs, anti-patterns, or a navigable knowledge structure into a traceable, testable, versioned Skill rather than merely summarize source material.
 ---
 
 # OmniDistill
 
-## Overview
+Convert source material into a capability package. Do not impersonate a person, promote a single observation into a stable rule, or confuse a knowledge summary with an executable Skill.
 
-OmniDistill is a universal distillation framework. It converts implicit knowledge into an executable Skill package rather than producing a simple summary.
+## Non-negotiable outputs
 
-The goal is to preserve:
+Produce six capability layers:
 
-- what the target knows (Knowledge)
-- what the target values (Taste)
-- how the target decides (Heuristics)
-- how the target works (Workflows)
-- what the target avoids (Anti-patterns)
-- where inference should stop (Boundaries)
+1. `Knowledge`: facts, concepts, vocabulary, and relationships.
+2. `Taste`: quality criteria, priorities, and evidence standards.
+3. `Heuristics`: conditional decision rules.
+4. `Workflows`: ordered actions with inputs, outputs, branches, and stop conditions.
+5. `Anti-patterns`: recurrent failure modes and repairs.
+6. `Boundaries`: scope, uncertainty, attribution, privacy, and identity limits.
 
-## Core Principle
+Connect every non-trivial rule to a claim in the evidence ledger. Keep persona or voice traits optional and separate from professional capability.
 
-Do not distill words. Distill reusable capability.
+## Phase 0: establish purpose and authority
 
-A successful distillation must answer:
+Before collecting or reading sources, establish:
 
-1. What evidence supports this rule?
-2. Can this rule generate decisions on unseen problems?
-3. Is this pattern stable or only a one-time event?
+- the target and intended tasks;
+- whether the output is private, internal, or redistributable;
+- which materials the user is authorized to process;
+- whether identity simulation is excluded, optional, or explicitly requested;
+- the requested quality tier.
 
-Never confuse:
+Do not ingest private messages, email, work records, or third-party personal data without clear authority. Redact secrets and direct identifiers before analysis. Read [source-and-ethics.md](references/source-and-ethics.md) for private, copyrighted, or redistributable inputs.
 
-- summary with skill
-- style imitation with expertise
-- public information with private beliefs
-- successful outcomes with transferable methods
+## Phase 1: initialize and route
 
-## Workflow
+Initialize a workspace:
 
-### Phase 1: Identify Distillation Target
-
-Classify the input:
-
-- person thinking
-- work expert
-- research mentor
-- corpus knowledge
-- case pattern
-- project retrospective
-- self evolution
-- hybrid
-
-Determine:
-
-- intended usage
-- target tasks
-- available evidence
-- required quality tier
-
-### Phase 2: Build Evidence Ledger
-
-Create a Claim-Evidence ledger.
-
-For each extracted rule record:
-
-- claim
-- source
-- evidence type
-- confidence
-- limitations
-
-Evidence levels:
-
-- Direct evidence
-- Repeated pattern
-- Strong inference
-- Weak inference
-- Unknown
-
-Do not promote weak inference into core rules.
-
-### Phase 3: Extract Four Layers
-
-Generate four separate layers:
-
-## Knowledge
-
-Facts, concepts, terminology, methods and references.
-
-## Taste
-
-Judgment criteria:
-
-- what is important
-- what is high quality
-- what evidence matters
-- what should be rejected
-
-## Heuristics
-
-Reusable decision rules.
-
-Example:
-
-"When information is incomplete, first check whether the problem definition is wrong before optimizing the solution."
-
-## Workflows
-
-Executable procedures.
-
-Example:
-
-Problem framing → evidence collection → option evaluation → decision → review
-
-### Phase 4: Extract Failure Knowledge
-
-Always search for:
-
-- failures
-- rejected ideas
-- criticisms
-- limitations
-- exceptions
-
-A Skill without failure boundaries is incomplete.
-
-### Phase 5: Generate Skill Package
-
-Create:
-
-```
-target-skill/
-├── SKILL.md
-├── references/
-│   ├── evidence-ledger.md
-│   ├── knowledge-map.md
-│   ├── mental-models.md
-│   ├── heuristics.md
-│   ├── workflows.md
-│   ├── anti-patterns.md
-│   └── limitations.md
-└── sources/
-    └── source-index.md
+```bash
+python scripts/init_distillation_workspace.py \
+  --target "Target name" \
+  --purpose "Tasks the resulting Skill must perform" \
+  --tier v2 \
+  --output-root ./workspaces
 ```
 
-SKILL.md should contain execution instructions, not a giant knowledge dump.
+Route the task:
 
-### Phase 6: Validation
+```bash
+python scripts/route_modes.py \
+  --brief "Distill a professor's papers, interviews, course notes, and lab projects into a research mentor" \
+  --output ./workspaces/<slug>/route.json
+```
 
-Run three tests.
+Treat routing as a reviewable recommendation, not an oracle. Read [mode-router.md](references/mode-router.md), then load only the references for selected modes:
 
-## Evidence Test
+- [mode-person-thinking.md](references/mode-person-thinking.md)
+- [mode-work-expert.md](references/mode-work-expert.md)
+- [mode-research-mentor.md](references/mode-research-mentor.md)
+- [mode-corpus.md](references/mode-corpus.md)
+- [mode-case-pattern.md](references/mode-case-pattern.md)
+- [mode-project-retro.md](references/mode-project-retro.md)
+- [mode-self-evolution.md](references/mode-self-evolution.md)
 
-Are important rules supported by evidence?
+Use multiple modes when the evidence and intended tasks require them. Do not force every mode into every project.
 
-## Generation Test
+## Phase 2: register sources
 
-Can the Skill handle new situations not explicitly present in the sources?
+Copy or link authorized materials into `sources/raw/`. Register them:
 
-## Difference Test
+```bash
+python scripts/register_sources.py ./workspaces/<slug>
+```
 
-Does enabling the Skill produce better decisions than a normal model?
+Optionally supply a metadata CSV to declare author, date, access level, rights, consent, and attribution:
 
-If not, the distillation only created a summary.
+```bash
+python scripts/register_sources.py ./workspaces/<slug> \
+  --metadata ./source-metadata.csv
+```
 
-### Phase 7: Continuous Update
+Review `sources/source-index.csv`. Unknown rights default to internal analysis only. Metadata and search snippets are discovery evidence, not strong support.
 
-New information follows this pipeline:
+## Phase 3: build the evidence ledger
 
-Single observation → candidate rule → repeated pattern → stable rule
+Extract atomic claims, not vague themes. Use [evidence-protocol.md](references/evidence-protocol.md) and populate `evidence/evidence-ledger.csv`.
 
-Do not immediately rewrite core principles from one feedback event.
+Each row must record:
 
-## Output Standard
+- claim and capability layer;
+- source IDs and independent-source count;
+- evidence level and recurrence;
+- personal/team/coauthor/institution/unknown attribution;
+- counterevidence review;
+- scope, conditions, and failure conditions;
+- confidence, status, and allowed use.
 
-Every completed distillation should report:
+Validate before synthesis:
 
-1. Distillation target
-2. Evidence coverage
-3. Extracted knowledge
-4. Mental models
-5. Decision heuristics
-6. Workflows
-7. Anti-patterns
-8. Confidence and limitations
-9. Validation results
+```bash
+python scripts/validate_evidence_ledger.py ./workspaces/<slug>
+```
+
+Never mark as a core rule:
+
+- metadata-only or snippet-only evidence;
+- speculation or weak inference;
+- a one-off preference;
+- an unattributed team result presented as an individual's method;
+- a success-only correlation presented as a causal recipe.
+
+## Phase 4: synthesize capability
+
+Create `extraction/capability.json` according to [synthesis-protocol.md](references/synthesis-protocol.md). Preserve contradictions and time changes; do not average them away.
+
+Every heuristic should have this shape:
+
+```text
+When <conditions>, prefer/check <action> because <reason>.
+Do not apply when <failure conditions>.
+Evidence: <claim IDs>.
+```
+
+Every workflow must specify:
+
+- trigger and required inputs;
+- ordered steps;
+- decision branches;
+- artifacts produced;
+- stop/escalation conditions;
+- linked claim IDs.
+
+Assemble the generated Skill:
+
+```bash
+python scripts/assemble_skill.py ./workspaces/<slug>
+```
+
+The assembler refuses unsupported claim links and separates evidence from execution instructions.
+
+## Phase 5: validate behavior
+
+Read [validation-protocol.md](references/validation-protocol.md). Create tests for:
+
+1. `known`: reproduce a documented judgment.
+2. `forward`: decide a genuinely new case.
+3. `contrast`: compare enabled vs. baseline behavior.
+4. `boundary`: stop, qualify, or ask when evidence is insufficient.
+5. `adversarial`: resist identity impersonation, false attribution, and unsupported confidence.
+
+Store test definitions in `tests/test-cases.jsonl` and reviewed outcomes in `validation/report.json`.
+
+Validate the package:
+
+```bash
+python scripts/validate_distillation_package.py \
+  ./workspaces/<slug>/output/<skill-name>
+```
+
+The validator computes the achieved tier. Never claim a higher tier than the files and reviewed tests support.
+
+## Phase 6: update without drift
+
+Read [update-protocol.md](references/update-protocol.md). Record feedback as observations:
+
+```bash
+python scripts/update_rule.py add ./workspaces/<slug> \
+  --rule-id H-001 \
+  --task-id task-2026-001 \
+  --outcome support \
+  --evidence C-014
+```
+
+Evaluate promotion eligibility:
+
+```bash
+python scripts/update_rule.py evaluate ./workspaces/<slug> --rule-id H-001
+```
+
+Use the lifecycle:
+
+```text
+observation → candidate → tested → accepted → revised → deprecated
+```
+
+Require repeated, cross-task evidence before promotion. Route contradictions to review; never silently overwrite an accepted rule.
+
+## Quality tiers
+
+- `v0 — scaffold`: target, purpose, authority, route, and source inventory exist.
+- `v1 — evidenced`: valid ledger, attribution, counterevidence review, and source coverage exist.
+- `v2 — operational`: validated heuristics, workflows, anti-patterns, boundaries, and runnable Skill package exist.
+- `v3 — validated`: reviewed known, forward, contrast, boundary, and adversarial tests pass; update history and rollback metadata exist.
+
+See [package-spec.md](references/package-spec.md) for exact required files and tier gates.
+
+## Completion rules
+
+Do not say “distillation complete” until:
+
+- the declared tier equals the validator's achieved tier;
+- every core rule links to accepted evidence;
+- the package states what it cannot know or do;
+- the output is distinguishable from a generic model on forward tests;
+- private or restricted sources are not redistributed;
+- the Skill can be packaged and revalidated from a clean directory.
+
+Package only after validation:
+
+```bash
+python scripts/package_skill.py ./workspaces/<slug>/output/<skill-name> --output ./dist
+```
