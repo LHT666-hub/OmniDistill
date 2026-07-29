@@ -1,100 +1,115 @@
-# 蒸馏大满贯 OmniDistill
+# OmniDistill · 蒸馏大满贯
 
-OmniDistill 是一个“蒸馏元 Skill”：把人物、学者、论文语料、知识库、成功与失败案例、岗位经验、项目记录和长期交互，转化为**证据可追踪、规则可执行、能力可测试、后续可更新**的 Skill 包。
+OmniDistill 是一个证据驱动的元 Skill：把人物、专家、学者、文档语料、案例、项目历史和长期反馈，转化为**可追踪、可执行、可验证、可更新**的 Agent Skill。
 
-它不训练模型权重。它把隐性知识工程化为：
+它不训练模型权重，也不把摘要包装成专家。完整输出必须包含：
 
-- Knowledge：知道什么
-- Taste：什么值得做、什么算强证据
-- Heuristics：信息不完整时如何判断
-- Workflows：具体任务如何执行
-- Anti-patterns：哪些做法容易失败
-- Boundaries：何时不应推断、执行或冒充
+```text
+Knowledge + Taste + Heuristics + Workflows
++ Anti-patterns + Boundaries + Evidence + Tests
+```
 
-## 为什么需要它
+## 与第一版的区别
 
-现有蒸馏项目往往只覆盖一个方向：人物思维、学术导师、知识库、成功案例、科研工作流或持续学习。OmniDistill 将这些路线统一为一套协议，并补上四个常被忽略的环节：
+第一版只有概念说明。当前版本增加了可运行的生产线：
 
-1. Claim–Evidence 证据账本
-2. 个人、团队、论文与项目的归因边界
-3. 已知任务、前向任务、对照任务和边界任务验证
-4. 新材料和反馈的增量更新，而不是一次性生成
-
-## 支持的模式
-
-- 人物思维 `person-thinking`
-- 工作专家 `work-expert`
-- 学术导师 `research-mentor`
-- 知识库 `corpus`
-- 案例模式 `case-pattern`
-- 项目复盘 `project-retro`
-- 自我成长 `self-evolution`
-- 多模式组合 `hybrid`
+- 七种可组合蒸馏模式和可审查路由器；
+- 带哈希、权利、同意和独立来源分组的来源登记；
+- Claim–Evidence 账本及强制晋升门槛；
+- 个人、团队、合作者、机构和未知归因；
+- 知识、品味、启发式、工作流、反模式和边界的独立合成；
+- known、forward、contrast、boundary、adversarial 五类测试；
+- v0–v3 自动核验，拒绝虚报等级；
+- 观察、候选、测试、接受、修订和废止的规则生命周期；
+- 生成包快照、回滚基础和 ZIP 打包。
 
 ## 快速开始
 
-向支持 Skill 的 Agent 提出：
-
-> 把这些材料蒸馏成一个可执行 Skill。先判断蒸馏模式，建立证据账本，然后生成工作流、启发式、反模式、限制和前向测试。不要把总结冒充能力，也不要模仿真实人物身份。
-
-或使用脚本初始化一个标准工作区：
-
 ```bash
 python scripts/init_distillation_workspace.py \
-  --target "目标名称" \
-  --mode research-mentor \
-  --tier standard \
+  --target "某位学者" \
+  --purpose "评估选题并批评论文设计" \
+  --tier v2 \
   --output-root ./workspaces
 ```
 
-完成目标 Skill 后执行：
+将授权材料放入 `workspaces/<slug>/sources/raw/`，然后：
 
 ```bash
-python scripts/validate_distillation_package.py ./workspaces/<slug>/output/<slug>
+python scripts/route_modes.py \
+  --brief "把论文、访谈、课程和课题组项目蒸馏成科研导师" \
+  --output workspaces/<slug>/route.json
+
+python scripts/register_sources.py workspaces/<slug>
+python scripts/validate_evidence_ledger.py workspaces/<slug>
+python scripts/assemble_skill.py workspaces/<slug>
+python scripts/validate_distillation_package.py \
+  workspaces/<slug>/output/<skill-name>
 ```
 
-## 版本
+通过验证后打包：
 
-- v0：资料与结构脚手架
-- v1：可追溯的证据地图
-- v2：可执行的操作型 Skill
-- v3：通过前向、对照和边界测试的验证型 Skill
+```bash
+python scripts/package_skill.py \
+  workspaces/<slug>/output/<skill-name> \
+  --output ./dist
+```
 
-版本代表证据和测试强度，不代表文案长度。
+`assemble_skill.py` 不会替模型凭空提炼能力。Agent 或研究者需要先审阅证据账本并填写 `extraction/capability.json`；脚本负责保证结构、链接、门槛和包的一致性。
 
-## 项目结构
+## 支持模式
+
+| 模式 | 蒸馏目标 |
+|---|---|
+| `person-thinking` | 心智模型、决策启发式、内在张力 |
+| `work-expert` | SOP、检查点、异常处理、升级规则 |
+| `research-mentor` | 选题品味、方法选择、证据标准 |
+| `corpus` | 知识地图、层级导航、概念关系 |
+| `case-pattern` | 成功/失败案例中的条件性模式 |
+| `project-retro` | 架构决策、复现路径、踩坑规则 |
+| `self-evolution` | 反馈、错误和偏好的规则生命周期 |
+
+模式不是互斥标签。蒸馏一位教授时，常见组合是：
 
 ```text
-omni-distill/
-├── SKILL.md
-├── agents/openai.yaml
-├── scripts/
-│   ├── init_distillation_workspace.py
-│   └── validate_distillation_package.py
-└── references/
-    ├── mode-router.md
-    ├── evidence-protocol.md
-    ├── synthesis-protocol.md
-    ├── package-spec.md
-    ├── validation-protocol.md
-    ├── update-protocol.md
-    ├── source-and-ethics.md
-    └── sample-prompts.md
+research-mentor + person-thinking + corpus + work-expert
 ```
 
-## 设计原则
+## 质量等级
 
-- 默认提炼能力，不默认模拟身份。
-- 强结论必须绑定证据和反证。
-- 知识、品味、启发式和工作流分层保存。
-- 成功案例必须尽量配合失败案例和情境条件。
-- 合著成果与团队流程不得无条件归因给个人。
-- 搜索摘要用于发现线索，不用于支撑强规则。
-- 达不到版本门槛时诚实降级。
+- `v0`：脚手架、用途、权限、模式和来源清单；
+- `v1`：通过验证的来源—主张证据链；
+- `v2`：可执行启发式、工作流、反模式和边界；
+- `v3`：五类行为测试经过独立或人工复核，并具备版本构建链与回滚能力。
 
-## 致谢
+等级代表证据和验证强度，不代表文案长度。
 
-本项目在设计层面参考了人物思维蒸馏、学术导师蒸馏、基金写作经验蒸馏、科研工作流和引用核验等开源实践，包括 Nuwa Skill、MentorForge、Chinese Grant Writer Skills、Supervisor-Skills 和 Academic Reference Matcher。OmniDistill 的协议、文件结构与脚本为独立实现。
+## 参考项目
+
+OmniDistill 在方法论层面参考了：
+
+- [colleague-skill / dot-skill](https://github.com/titanwings/colleague-skill)
+- [Nuwa Skill](https://github.com/alchaincyf/nuwa-skill)
+- [MentorForge](https://github.com/qwqalice/MentorForge)
+- [Chinese Grant Writer Skills](https://github.com/HuiyuLi-2000/Chinese-Grant-Writer-Skills)
+- [Supervisor-Skills](https://github.com/HKUSTDial/Supervisor-Skills)
+- [Corpus2Skill](https://github.com/dukesun99/Corpus2Skill)
+- [OpenKB](https://github.com/VectifyAI/OpenKB)
+- [self-improving-agent](https://github.com/peterskoett/self-improving-agent)
+- [Academic Reference Matcher](https://github.com/keros68/academic-reference-matcher-skill)
+
+具体借鉴点、局限和 OmniDistill 的回应见 [`references/reference-projects.md`](references/reference-projects.md) 与 [`docs/DESIGN_RATIONALE.md`](docs/DESIGN_RATIONALE.md)。
+
+本项目为独立实现，不复制第三方项目的具体 Skill 文本。引用项目许可证各不相同；尤其不能把 CC BY-NC-SA 内容直接重新发布为 MIT。
+
+## 测试
+
+```bash
+python scripts/doctor.py
+python -m unittest discover -s tests -v
+```
+
+测试覆盖模式路由、重复初始化保护、来源登记、弱证据拒绝、v2 端到端生成与打包、v3 门槛及规则冲突阻断。
 
 ## License
 

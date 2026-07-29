@@ -1,0 +1,4 @@
+interface:
+  display_name: "OmniDistill 蒸馏大满贯"
+  short_description: "把人物、语料和经验蒸馏为可验证、可更新的 Agent Skill"
+  default_prompt: "Use $omni-distill to build an evidence-grounded, executable, and validated Skill from these materials."
