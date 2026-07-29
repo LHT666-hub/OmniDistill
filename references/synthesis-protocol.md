@@ -50,4 +50,3 @@ State what the sources cannot reveal: private intent, tacit intuition, failed un
 - No personality style inside a professional workflow.
 - No contradiction silently averaged into a single rule.
 - No source quotation required at runtime when a concise evidence-linked rule suffices.
-

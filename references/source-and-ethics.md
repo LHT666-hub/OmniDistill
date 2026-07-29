@@ -34,4 +34,3 @@ Default policy is `capability_only`. A generated Skill:
 ## Licenses
 
 Check each referenced repository before copying implementation or prose. Methodological inspiration is not permission to relicense source text. In particular, non-commercial share-alike material cannot be copied into an MIT package without satisfying its license.
-

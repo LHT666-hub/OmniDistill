@@ -21,4 +21,3 @@ Separate four kinds of observations:
 - tacit constraints absent from formal SOPs.
 
 Use artifacts and observed decisions to validate interview claims. Do not redistribute internal records in the generated Skill.
-

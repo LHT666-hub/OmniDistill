@@ -47,4 +47,3 @@ For every accepted taste, heuristic, or workflow claim:
 2. record counterevidence IDs or record that the search found none;
 3. narrow scope when evidence conflicts;
 4. reject the rule if its predictive value collapses.
-

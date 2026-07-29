@@ -21,4 +21,3 @@ Treat feedback as observations, not immediate truth.
 - route contradictions to human review;
 - expire environment-specific rules after relevant upgrades;
 - redact secrets and personal identifiers from logs.
-

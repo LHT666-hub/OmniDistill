@@ -35,4 +35,3 @@ Define method and evidence signals by research paradigm:
 - humanities: archive, textual evidence, conceptual precision, counter-reading;
 - law: authority, doctrine, jurisdiction, case comparison, interpretive method;
 - theory: assumptions, internal consistency, explanatory scope, counterexample.
-

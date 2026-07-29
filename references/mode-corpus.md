@@ -23,4 +23,3 @@ Frequency is not enough. Promote a corpus pattern into a heuristic only when it 
 - a plausible reason or mechanism;
 - declared scope and counterexamples;
 - value on a task not directly answered by the corpus.
-

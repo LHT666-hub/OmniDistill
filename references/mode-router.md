@@ -29,4 +29,3 @@ When modes conflict:
 3. Record the conflicting source or counterexample.
 4. Prefer observed decisions over promotional language.
 5. Prefer a later dated rule only when the target demonstrably changed.
-

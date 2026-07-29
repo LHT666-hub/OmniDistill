@@ -21,4 +21,3 @@ Extract:
 - open risks and technical debt.
 
 Do not expose secrets, internal URLs, credentials, personal data, or proprietary source in a redistributable package.
-

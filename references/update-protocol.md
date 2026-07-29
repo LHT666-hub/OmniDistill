@@ -31,4 +31,3 @@ Before rebuilding an existing package, `assemble_skill.py` snapshots it. Retain:
 - changed claims;
 - reason for update;
 - validation delta.
-

@@ -28,4 +28,3 @@ Put failed candidates in notes, not core rules.
 ## Identity boundary
 
 Default to third-person framing: “This Skill applies a documented decision pattern associated with X.” Do not write “I am X.” Voice and rhetorical traits belong in an optional persona module and must never substitute for evidence.
-

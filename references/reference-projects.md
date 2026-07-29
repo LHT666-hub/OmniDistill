@@ -28,4 +28,3 @@ Across these approaches, quality can be weakened by one or more of:
 - one-shot generation without governed updates.
 
 OmniDistill treats these as validation failures rather than optional caveats.
-

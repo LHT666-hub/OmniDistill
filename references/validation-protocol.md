@@ -37,4 +37,3 @@ Each result in `validation/report.json` must contain:
 - follow-up action.
 
 Do not self-award v3 from model-generated test text. A human or independent evaluation process must review outcomes.
-

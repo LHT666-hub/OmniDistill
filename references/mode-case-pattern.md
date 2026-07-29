@@ -19,4 +19,3 @@ Label outputs as:
 - `causal claim`: requires an appropriate research design and must not be inferred from frequency alone.
 
 Do not turn fixed counts, scores, or templates into universal requirements without cross-context evidence.
-
